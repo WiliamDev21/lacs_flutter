@@ -1,9 +1,12 @@
+import 'package:lacs_flutter/app/modules/home/empleados/altas/altas_tabs_view.dart';
+import 'package:lacs_flutter/app/modules/home/empleados/altas/datos_personales/datos_personales_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../../screens/demo_screen.dart';
 
 part 'app_routes.dart';
 
@@ -13,6 +16,8 @@ class AppPages {
   static const INITIAL = Routes.LOGIN;
 
   static final routes = [
+    GetPage(name: '/altas', page: () => AltasTabsView()),
+    GetPage(name: '/datos-personales', page: () => DatosPersonalesView()),
     GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
@@ -23,5 +28,6 @@ class AppPages {
       page: () => const LoginView(),
       binding: LoginBinding(),
     ),
+    GetPage(name: _Paths.DEMO, page: () => DemoScreen()),
   ];
 }

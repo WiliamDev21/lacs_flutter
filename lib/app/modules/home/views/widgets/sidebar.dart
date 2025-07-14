@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
+import 'package:lacs_flutter/styles/app_colors.dart';
+
+// If AppColors is not defined, define it here or import the correct file.
+// Example definition (remove if already defined elsewhere):
+class AppColors {
+  static const double borderRadius = 8.0;
+  static const Color sidebarBgDark = Color(0xFF23232B);
+}
 
 class Sidebar extends StatelessWidget {
   final HomeController controller;
@@ -15,14 +23,23 @@ class Sidebar extends StatelessWidget {
         child: GestureDetector(
           onTap: () => controller.toggleSidebar(),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(AppColors.borderRadius * 2.5),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               width: controller.isSidebarExpanded.value ? 280 : 70,
-              margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: const Color(0xFF23232B),
-                borderRadius: BorderRadius.circular(24),
+                color: AppColors.sidebarBgDark,
+                borderRadius: BorderRadius.circular(
+                  AppColors.borderRadius * 2.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(2, 0),
+                    blurRadius: 10,
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,19 +52,15 @@ class Sidebar extends StatelessWidget {
                           const SizedBox(height: 24),
                           if (!controller.isSidebarExpanded.value)
                             Center(
-                            child: Image.asset(
-                              'assets/lacs_logo.jpeg',
-                              height: 50,
+                              child: Image.asset(
+                                'assets/LACS-Logo.png',
+                                height: 50,
+                              ),
                             ),
-                          ),
                           if (controller.isSidebarExpanded.value) ...[
                             Center(
-                            child: Image.asset(
-                              'assets/lacs_logo_full.jpeg',
-                              height: 60,
+                              child: Image.asset('assets/LACS.png', height: 60),
                             ),
-                          ),
-                          
                             const SizedBox(width: 12),
                           ],
                           const SizedBox(height: 32),
@@ -95,9 +108,7 @@ class Sidebar extends StatelessWidget {
                             label: 'Incidencias',
                             expanded: controller.isSidebarExpanded.value,
                           ),
-                          _SidebarItem(
-                            icon: Icons.groups,
-                            label: 'Empleados',
+                          _EmpleadosDropdownSidebarItem(
                             expanded: controller.isSidebarExpanded.value,
                           ),
                           const SizedBox(height: 24),
@@ -149,7 +160,7 @@ class Sidebar extends StatelessWidget {
                           ),
                         ),
                         if (controller.isSidebarExpanded.value) ...[
-                          const SizedBox(width: 12),
+                          const SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
@@ -215,6 +226,156 @@ class _SidebarItem extends StatelessWidget {
                 ),
               ),
             ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EmpleadosDropdownSidebarItem extends StatefulWidget {
+  final bool expanded;
+  const _EmpleadosDropdownSidebarItem({Key? key, required this.expanded})
+    : super(key: key);
+
+  @override
+  State<_EmpleadosDropdownSidebarItem> createState() =>
+      _EmpleadosDropdownSidebarItemState();
+}
+
+class _EmpleadosDropdownSidebarItemState
+    extends State<_EmpleadosDropdownSidebarItem> {
+  bool _showDropdown = false;
+
+  void _toggleDropdown(bool show) {
+    setState(() {
+      _showDropdown = show;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () => _toggleDropdown(!_showDropdown),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            child: SizedBox(
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 0,
+                    child: Icon(Icons.groups, color: Colors.white, size: 28),
+                  ),
+                  if (widget.expanded) ...[
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Text(
+                        'Empleados',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Icon(
+                      _showDropdown
+                          ? Icons.arrow_drop_up
+                          : Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (_showDropdown && widget.expanded)
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40,
+              right: 8,
+              top: 2,
+              bottom: 2,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF23232B),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                    offset: Offset(2, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _DropdownOption(
+                    icon: Icons.list_alt,
+                    label: 'Lista de empleados',
+                    onTap: () {
+                      Get.toNamed('/listEmp');
+                      _toggleDropdown(false);
+                    },
+                  ),
+                  _DropdownOption(
+                    icon: Icons.person_add,
+                    label: 'Altas',
+                    onTap: () {
+                      Get.toNamed('/altas');
+                      _toggleDropdown(false);
+                    },
+                  ),
+                  _DropdownOption(
+                    icon: Icons.person_remove,
+                    label: 'Bajas',
+                    onTap: () {
+                      Get.toNamed('/bajas');
+                      _toggleDropdown(false);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _DropdownOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  const _DropdownOption({
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.white, size: 22),
+            const SizedBox(width: 12),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
           ],
         ),
       ),
