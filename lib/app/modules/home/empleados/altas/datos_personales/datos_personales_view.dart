@@ -15,9 +15,8 @@ class DatosPersonalesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Información General del Empleado')),
-      body: SingleChildScrollView(
+    return Expanded(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
