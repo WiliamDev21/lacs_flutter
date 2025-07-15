@@ -105,50 +105,52 @@ class Sidebar extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            if (controller.selectedCompany.value != 'LACS')
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
+                      if (controller.isSidebarExpanded.value)
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              if (controller.selectedCompany.value != 'LACS')
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0,
                                   ),
-                                  onPressed: () =>
-                                      controller.selectedCompany.value = 'LACS',
-                                  child: const Text('LACS'),
-                                ),
-                              ),
-                            if (controller.selectedCompany.value != 'DORNISH')
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
                                     ),
+                                    onPressed: () =>
+                                        controller.selectedCompany.value =
+                                            'LACS',
+                                    child: const Text('LACS'),
                                   ),
-                                  onPressed: () =>
-                                      controller.selectedCompany.value =
-                                          'DORNISH',
-                                  child: const Text('DORNISH'),
                                 ),
-                              ),
-                          ],
+                              if (controller.selectedCompany.value != 'DORNISH')
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0,
+                                  ),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () =>
+                                        controller.selectedCompany.value =
+                                            'DORNISH',
+                                    child: const Text('DORNISH'),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   const Divider(color: Colors.white54),
@@ -219,6 +221,74 @@ class Sidebar extends StatelessWidget {
                             const SizedBox(height: 24),
                           ]),
                         ),
+                      ],
+                    ),
+                  ),
+                  // SECCIÓN FIJA INFERIOR: Usuario
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 16,
+                    ),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.white24, width: 0.5),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.account_circle,
+                            color: AppColors.sidebarBgDark,
+                            size: 28,
+                          ),
+                        ),
+                        if (controller.isSidebarExpanded.value) ...[
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Text(
+                                  'Usuario',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  'rol',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            onPressed: () {
+                              // Lógica de cierre de sesión
+                              Get.offAllNamed('/login');
+                            },
+                            tooltip: 'Cerrar sesión',
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
