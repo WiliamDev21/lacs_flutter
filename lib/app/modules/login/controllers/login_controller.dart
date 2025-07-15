@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lacs_flutter/app/modules/home/views/home_view.dart';
 
 class LoginController extends GetxController {
   //TODO: Implement LoginController
@@ -19,5 +20,7 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void login() {
+    Get.off(HomeView());
+  }
 }

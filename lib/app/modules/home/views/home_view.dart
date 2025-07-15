@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:get/get.dart';
 
 import 'widgets/sidebar.dart';
@@ -19,14 +18,7 @@ class HomeView extends StatelessWidget {
         children: [
           Sidebar(controller: controller),
           // Main content
-          Expanded(
-            child: Center(
-              child: Text(
-                'HomeView is working',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
+          Expanded(child: controller.currentRightPanelView.value),
         ],
       ),
     );

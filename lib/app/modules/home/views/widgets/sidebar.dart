@@ -50,19 +50,67 @@ class Sidebar extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 24),
-                          if (!controller.isSidebarExpanded.value)
-                            Center(
+                          Center(
+                            child: ColorFiltered(
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcATop,
+                              ),
                               child: Image.asset(
-                                'assets/LACS-Logo.png',
-                                height: 50,
+                                controller.selectedCompany.value == 'LACS'
+                                    ? (controller.isSidebarExpanded.value
+                                          ? 'assets/LACS.png'
+                                          : 'assets/LACS-Logo.png')
+                                    : (controller.isSidebarExpanded.value
+                                          ? 'assets/DORNISH.png'
+                                          : 'assets/DORNISH-Logo.png'),
+                                height: controller.isSidebarExpanded.value
+                                    ? 60
+                                    : 50,
                               ),
                             ),
-                          if (controller.isSidebarExpanded.value) ...[
-                            Center(
-                              child: Image.asset('assets/LACS.png', height: 60),
+                          ),
+                          const SizedBox(height: 12),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 8,
                             ),
-                            const SizedBox(width: 12),
-                          ],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (controller.selectedCompany.value != 'LACS')
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () =>
+                                        controller.selectedCompany.value =
+                                            'LACS',
+                                    child: const Text('LACS'),
+                                  ),
+                                if (controller.selectedCompany.value !=
+                                    'DORNISH')
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () =>
+                                        controller.selectedCompany.value =
+                                            'DORNISH',
+                                    child: const Text('DORNISH'),
+                                  ),
+                              ],
+                            ),
+                          ),
                           const SizedBox(height: 32),
                           if (controller.isSidebarExpanded.value)
                             const Padding(
@@ -112,33 +160,6 @@ class Sidebar extends StatelessWidget {
                             expanded: controller.isSidebarExpanded.value,
                           ),
                           const SizedBox(height: 24),
-                          if (controller.isSidebarExpanded.value)
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'LACS',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          const SizedBox(height: 8),
-                          if (controller.isSidebarExpanded.value)
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'DORNISH',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),
@@ -214,7 +235,10 @@ class _SidebarItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(flex: 0, child: Icon(icon, color: Colors.white, size: 28)),
+            Flexible(
+              flex: 0,
+              child: Center(child: Icon(icon, color: Colors.white, size: 28)),
+            ),
             if (expanded) ...[
               const SizedBox(width: 12),
               Flexible(
@@ -268,7 +292,9 @@ class _EmpleadosDropdownSidebarItemState
                 children: [
                   Flexible(
                     flex: 0,
-                    child: Icon(Icons.groups, color: Colors.white, size: 28),
+                    child: Center(
+                      child: Icon(Icons.groups, color: Colors.white, size: 28),
+                    ),
                   ),
                   if (widget.expanded) ...[
                     const SizedBox(width: 12),

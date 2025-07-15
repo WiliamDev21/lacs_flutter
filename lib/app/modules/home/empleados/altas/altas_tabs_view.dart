@@ -42,7 +42,6 @@ class _AltasTabsViewState extends State<AltasTabsView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Altas - Pasos a Seguir'),
         bottom: TabBar(
           controller: _tabController,
           tabs: _tabs,

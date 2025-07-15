@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:animated_gradient_background/animated_gradient_background.dart';
 import 'package:get/get.dart';
@@ -45,7 +44,6 @@ class LoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 32),
                 TextField(
-                  
                   controller: usernameController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person),
@@ -85,11 +83,15 @@ class LoginView extends GetView<LoginController> {
                       shadowColor: Colors.black.withOpacity(0.25),
                     ),
                     onPressed: () {
-                      Get.toNamed('/home'); // Navigate to home page
+                      controller.login(); // Navigate to home page
                     },
                     child: const Text(
                       'Iniciar Sesión',
-                      style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
