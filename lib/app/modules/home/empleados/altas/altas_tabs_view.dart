@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/adicional_beneficiarios/adicional_beneficiarios_view.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/contacto_domicilio/contacto_domicilio_view.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/datos_laborales/datos_laborales_view.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/datos_personales/datos_personales_view.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/informacion_salarial/informacion_salarial_view.dart';
-import 'package:lacs_flutter/app/modules/home/empleados/altas/seguridad_social_bancarios/seguridad_social_bancarios_view.dart';
 
 class AltasTabsView extends StatefulWidget {
   const AltasTabsView({Key? key}) : super(key: key);
@@ -48,15 +42,7 @@ class _AltasTabsViewState extends State<AltasTabsView>
           isScrollable: true,
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          DatosPersonalesView(),
-          ContactoDomicilioView(),
-          DatosLaboralesView(),
-          InformacionSalarialView(),
-          AdicionalBeneficiariosView(),
-          SeguridadSocialBancariosView(),
+      body: TabBarView(controller: _tabController, children: [
         ],
       ),
     );

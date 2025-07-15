@@ -18,9 +18,10 @@ class _SidebarItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Icon(icon, color: Colors.white, size: 28)),
+          Icon(icon, color: Colors.white, size: 28),
           if (expanded) ...[
             const SizedBox(width: 12),
             Text(
@@ -28,6 +29,7 @@ class _SidebarItem extends StatelessWidget {
               style: const TextStyle(color: Colors.white, fontSize: 18),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
+              textAlign: TextAlign.left,
             ),
           ],
         ],
@@ -75,158 +77,173 @@ class Sidebar extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 24),
-                  Center(
-                    child: ColorFiltered(
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcATop,
+                  // Top section: logo, company switch, menu
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 24),
+                      Center(
+                        child: ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcATop,
+                          ),
+                          child: Image.asset(
+                            controller.selectedCompany.value == 'LACS'
+                                ? (controller.isSidebarExpanded.value
+                                      ? 'assets/LACS.png'
+                                      : 'assets/LACS-Logo.png')
+                                : (controller.isSidebarExpanded.value
+                                      ? 'assets/DORNISH.png'
+                                      : 'assets/DORNISH-Logo.png'),
+                            height: controller.isSidebarExpanded.value
+                                ? 60
+                                : 50,
+                          ),
+                        ),
                       ),
-                      child: Image.asset(
-                        controller.selectedCompany.value == 'LACS'
-                            ? (controller.isSidebarExpanded.value
-                                  ? 'assets/LACS.png'
-                                  : 'assets/LACS-Logo.png')
-                            : (controller.isSidebarExpanded.value
-                                  ? 'assets/DORNISH.png'
-                                  : 'assets/DORNISH-Logo.png'),
-                        height: controller.isSidebarExpanded.value ? 60 : 50,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (controller.isSidebarExpanded.value)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      child: Row(
+                      const SizedBox(height: 12),
+                      if (controller.isSidebarExpanded.value)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    if (controller.selectedCompany.value !=
+                                        'LACS')
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4.0,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              controller.selectedCompany.value =
+                                                  'LACS',
+                                          child: const Text('LACS'),
+                                        ),
+                                      ),
+                                    if (controller.selectedCompany.value !=
+                                        'DORNISH')
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4.0,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              controller.selectedCompany.value =
+                                                  'DORNISH',
+                                          child: const Text('DORNISH'),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 32),
+                      if (controller.isSidebarExpanded.value)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Center(
+                            child: Text(
+                              'MENÚ PRINCIPAL',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 16),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                if (controller.selectedCompany.value != 'LACS')
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4.0,
-                                    ),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: Colors.black,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () =>
-                                          controller.selectedCompany.value =
-                                              'LACS',
-                                      child: const Text('LACS'),
-                                    ),
-                                  ),
-                                if (controller.selectedCompany.value !=
-                                    'DORNISH')
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4.0,
-                                    ),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: Colors.black,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () =>
-                                          controller.selectedCompany.value =
-                                              'DORNISH',
-                                      child: const Text('DORNISH'),
-                                    ),
-                                  ),
-                              ],
-                            ),
+                          _SidebarItem(
+                            icon: Icons.home,
+                            label: 'Inicio',
+                            expanded: controller.isSidebarExpanded.value,
                           ),
                         ],
                       ),
-                    ),
-                  const SizedBox(height: 32),
-                  if (controller.isSidebarExpanded.value)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'MENÚ PRINCIPAL',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          letterSpacing: 1,
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _SidebarItem(
+                            icon: Icons.notifications,
+                            label: 'Notificaciones',
+                            expanded: controller.isSidebarExpanded.value,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      if (controller.isSidebarExpanded.value)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Center(
+                            child: Text(
+                              'GENERAL',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
                         ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _SidebarItem(
+                            icon: Icons.warning_amber_rounded,
+                            label: 'Incidencias',
+                            expanded: controller.isSidebarExpanded.value,
+                          ),
+                        ],
                       ),
-                    ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _SidebarItem(
-                        icon: Icons.home,
-                        label: 'Inicio',
-                        expanded: controller.isSidebarExpanded.value,
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _EmpleadosDropdownSidebarItem(
+                            expanded: controller.isSidebarExpanded.value,
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 24),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _SidebarItem(
-                        icon: Icons.notifications,
-                        label: 'Notificaciones',
-                        expanded: controller.isSidebarExpanded.value,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  if (controller.isSidebarExpanded.value)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'GENERAL',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _SidebarItem(
-                        icon: Icons.warning_amber_rounded,
-                        label: 'Incidencias',
-                        expanded: controller.isSidebarExpanded.value,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _EmpleadosDropdownSidebarItem(
-                        expanded: controller.isSidebarExpanded.value,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
+                  // Bottom section: user avatar
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -291,123 +308,71 @@ class _EmpleadosDropdownSidebarItem extends StatefulWidget {
 
 class _EmpleadosDropdownSidebarItemState
     extends State<_EmpleadosDropdownSidebarItem> {
-  OverlayEntry? _dropdownOverlay;
-
-  void _removeDropdownOverlay() {
-    _dropdownOverlay?.remove();
-    _dropdownOverlay = null;
-  }
-
-  void _showDropdownOverlay(BuildContext context) {
-    if (_dropdownOverlay != null) return;
-    final RenderBox buttonBox = context.findRenderObject() as RenderBox;
-    final Offset buttonPosition = buttonBox.localToGlobal(Offset.zero);
-    _dropdownOverlay = OverlayEntry(
-      builder: (context) => GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: _removeDropdownOverlay,
-        child: Stack(
-          children: [
-            Positioned(
-              left: buttonPosition.dx + buttonBox.size.width,
-              top: buttonPosition.dy,
-              child: Material(
-                color: Colors.transparent,
-                elevation: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF23232B),
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 8,
-                        offset: Offset(2, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: const Icon(
-                          Icons.list_alt,
-                          color: Colors.white,
-                        ),
-                        title: const Text(
-                          'Lista de empleados',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          Get.toNamed('/listEmp');
-                          _removeDropdownOverlay();
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.person_add,
-                          color: Colors.white,
-                        ),
-                        title: const Text(
-                          'Altas',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          Get.toNamed('/altas');
-                          _removeDropdownOverlay();
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.person_remove,
-                          color: Colors.white,
-                        ),
-                        title: const Text(
-                          'Bajas',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          Get.toNamed('/bajas');
-                          _removeDropdownOverlay();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-    Overlay.of(context).insert(_dropdownOverlay!);
-  }
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (buttonContext) => GestureDetector(
-        onTap: () {
-          if (widget.expanded) {
-            _showDropdownOverlay(buttonContext);
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    if (!widget.expanded) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(child: Icon(Icons.groups, color: Colors.white, size: 28)),
+          ],
+        ),
+      );
+    }
+    return Theme(
+      data: Theme.of(context).copyWith(
+        dividerColor: Colors.transparent,
+        cardColor: const Color(0xFF23232B),
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.white),
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 240),
+          child: ExpansionTile(
+            initiallyExpanded: _expanded,
+            onExpansionChanged: (val) => setState(() => _expanded = val),
+            leading: const Icon(Icons.groups, color: Colors.white, size: 28),
+            title: const Text(
+              'Empleados',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            iconColor: Colors.white,
+            collapsedIconColor: Colors.white,
+            childrenPadding: const EdgeInsets.only(
+              left: 40,
+              right: 8,
+              bottom: 8,
+            ),
             children: [
-              Center(child: Icon(Icons.groups, color: Colors.white, size: 28)),
-              if (widget.expanded) ...[
-                const SizedBox(width: 12),
-                Text(
-                  'Empleados',
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+              ListTile(
+                leading: const Icon(Icons.list_alt, color: Colors.white),
+                title: const Text(
+                  'Lista de empleados',
+                  style: TextStyle(color: Colors.white),
                 ),
-                const Icon(Icons.arrow_drop_down, color: Colors.white),
-              ],
+                onTap: () => Get.toNamed('/listEmp'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_add, color: Colors.white),
+                title: const Text(
+                  'Altas',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Get.toNamed('/altas'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_remove, color: Colors.white),
+                title: const Text(
+                  'Bajas',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Get.toNamed('/bajas'),
+              ),
             ],
           ),
         ),

@@ -14,6 +14,7 @@ class DatosPersonalesForm extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Row(
+            spacing: 10,
             children: [
               Expanded(child: _inputField('Apellido Paterno')),
               Expanded(child: _inputField('Apellido Materno')),
@@ -21,18 +22,21 @@ class DatosPersonalesForm extends StatelessWidget {
             ],
           ),
           Row(
+            spacing: 10,
             children: [
               Expanded(child: _dateField('Fecha de Nacimiento')),
               Expanded(child: _inputField('Edad', readOnly: true)),
             ],
           ),
           Row(
+            spacing: 10,
             children: [
               Expanded(child: _inputField('Lugar de Nacimiento')),
               Expanded(child: _inputField('Nacionalidad')),
             ],
           ),
           Row(
+            spacing: 10,
             children: [
               Expanded(
                 child: _dropdownField('Sexo', [
@@ -54,6 +58,7 @@ class DatosPersonalesForm extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Row(
+            spacing: 10,
             children: [
               ElevatedButton(
                 onPressed: () {},

@@ -42,23 +42,58 @@ class _PersInfoTabsViewState extends State<PersInfoTabsView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Información Personal del Empleado'),
+        title: const Text('Información del Empleado'),
         bottom: TabBar(
           controller: _tabController,
           tabs: _tabs,
           isScrollable: true,
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          DatosPersonalesForm(),
-          ContactoDomicilioForm(),
-          DatosLaboralesForm(),
-          InformacionSalarialForm(),
-          SeguridadSocialBancariosForm(),
-          AdicionalBeneficiariosForm(),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 8,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const [
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: DatosPersonalesForm(),
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: ContactoDomicilioForm(),
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: DatosLaboralesForm(),
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: InformacionSalarialForm(),
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: SeguridadSocialBancariosForm(),
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: AdicionalBeneficiariosForm(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

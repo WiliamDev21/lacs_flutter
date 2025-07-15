@@ -13,7 +13,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
     return Scaffold(
-      backgroundColor: const Color(0xFF6CA6A6),
       body: Row(
         children: [
           Sidebar(controller: controller),
