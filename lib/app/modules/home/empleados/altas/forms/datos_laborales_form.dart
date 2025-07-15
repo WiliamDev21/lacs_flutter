@@ -5,50 +5,67 @@ class DatosLaboralesForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Información del Puesto y Cliente',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          _inputField('Puesto o Categoría'),
-          _inputField('Actividades a Realizar'),
-          _inputField('Nombre Empresa Cliente'),
-          _inputField('RFC Empresa Cliente'),
-          _inputField('Giro Empresa Cliente'),
-          const SizedBox(height: 16),
-          const Text(
-            'Detalles del Contrato y Proyecto',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          _dropdownField('Tipo de Contrato', [
-            'Determinado',
-            'Obra Determinada',
-            'Indeterminado',
-            'Periodo de Prueba',
-          ]),
-          _inputField('Tiempo Duración (Si Determinado) / Nombre Proyecto'),
-          _inputField('En qué Consiste el Proyecto (Obra Determinada)'),
-          Row(
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 16,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: _checkboxField('Se le va a reconocer antigüedad'),
+              const Text(
+                'Información del Puesto y Cliente',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              Expanded(child: _dateField('Fecha Antigüedad Cliente')),
+              _inputField('Puesto o Categoría'),
+              _inputField('Actividades a Realizar'),
+              _inputField('Nombre Empresa Cliente'),
+              _inputField('RFC Empresa Cliente'),
+              _inputField('Giro Empresa Cliente'),
+              const SizedBox(height: 16),
+              const Text(
+                'Detalles del Contrato y Proyecto',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              _dropdownField('Tipo de Contrato', [
+                'Determinado',
+                'Obra Determinada',
+                'Indeterminado',
+                'Periodo de Prueba',
+              ]),
+              _inputField('Tiempo Duración (Si Determinado) / Nombre Proyecto'),
+              _inputField('En qué Consiste el Proyecto (Obra Determinada)'),
+              Row(
+                children: [
+                  Expanded(
+                    child: _checkboxField('Se le va a reconocer antigüedad'),
+                  ),
+                  Expanded(child: _dateField('Fecha Antigüedad Cliente')),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Guardar Datos Laborales'),
+                  ),
+                ],
+              ),
             ],
           ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Guardar Datos Laborales'),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

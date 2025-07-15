@@ -44,6 +44,7 @@ class _PersInfoTabsViewState extends State<PersInfoTabsView>
       appBar: AppBar(
         title: const Text('Información del Empleado'),
         bottom: TabBar(
+          onTap: (value) {},
           controller: _tabController,
           tabs: _tabs,
           isScrollable: true,
