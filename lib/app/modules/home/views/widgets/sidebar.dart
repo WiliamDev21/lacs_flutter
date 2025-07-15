@@ -18,20 +18,20 @@ class _SidebarItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center, // Always center the icons
+        mainAxisAlignment: expanded
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white, size: 28),
           if (expanded) ...[
             const SizedBox(width: 12),
-            Align(
-              alignment: Alignment.topLeft,
+            Expanded(
               child: Text(
                 label,
                 style: const TextStyle(color: Colors.white, fontSize: 18),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                textAlign: TextAlign.left,
               ),
             ),
           ],
@@ -227,7 +227,7 @@ class Sidebar extends StatelessWidget {
                   // SECCIÓN FIJA INFERIOR: Usuario
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
+                      horizontal: 15,
                       vertical: 16,
                     ),
                     decoration: const BoxDecoration(
@@ -335,53 +335,50 @@ class _EmpleadosDropdownSidebarItemState
         textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.white),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 6),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 250),
-            child: ExpansionTile(
-              initiallyExpanded: _expanded,
-              onExpansionChanged: (val) => setState(() => _expanded = val),
-              leading: const Icon(Icons.groups, color: Colors.white, size: 28),
-              title: const Text(
-                'Empleados',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-              iconColor: Colors.white,
-              collapsedIconColor: Colors.white,
-              childrenPadding: const EdgeInsets.only(
-                left: 40,
-                right: 8,
-                bottom: 8,
-              ),
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.list_alt, color: Colors.white),
-                  title: const Text(
-                    'Lista de empleados',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => Get.toNamed('/listEmp'),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.person_add, color: Colors.white),
-                  title: const Text(
-                    'Altas',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => Get.toNamed('/altas'),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.person_remove, color: Colors.white),
-                  title: const Text(
-                    'Bajas',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () => Get.toNamed('/bajas'),
-                ),
-              ],
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 240),
+          child: ExpansionTile(
+            initiallyExpanded: _expanded,
+            onExpansionChanged: (val) => setState(() => _expanded = val),
+            leading: const Icon(Icons.groups, color: Colors.white, size: 28),
+            title: const Text(
+              'Empleados',
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
+            iconColor: Colors.white,
+            collapsedIconColor: Colors.white,
+            childrenPadding: const EdgeInsets.only(
+              left: 40,
+              right: 8,
+              bottom: 8,
+            ),
+            children: [
+              ListTile(
+                leading: const Icon(Icons.list_alt, color: Colors.white),
+                title: const Text(
+                  'Lista de empleados',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Get.toNamed('/listEmp'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_add, color: Colors.white),
+                title: const Text(
+                  'Altas',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Get.toNamed('/altas'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_remove, color: Colors.white),
+                title: const Text(
+                  'Bajas',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () => Get.toNamed('/bajas'),
+              ),
+            ],
           ),
         ),
       ),

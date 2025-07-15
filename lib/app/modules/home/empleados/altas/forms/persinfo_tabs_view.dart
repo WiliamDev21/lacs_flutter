@@ -53,17 +53,6 @@ class _PersInfoTabsViewState extends State<PersInfoTabsView>
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
           child: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
