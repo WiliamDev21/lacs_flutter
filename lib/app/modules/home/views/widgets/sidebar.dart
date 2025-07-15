@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
-import 'package:lacs_flutter/styles/app_colors.dart';
+// import eliminado: 'package:lacs_flutter/styles/app_colors.dart';
 
-// If AppColors is not defined, define it here or import the correct file.
-// Example definition (remove if already defined elsewhere):
+class _SidebarItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool expanded;
+  const _SidebarItem({
+    required this.icon,
+    required this.label,
+    required this.expanded,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(child: Icon(icon, color: Colors.white, size: 28)),
+          if (expanded) ...[
+            const SizedBox(width: 12),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.white, fontSize: 18),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// Definición local de AppColors si no está importada correctamente
 class AppColors {
   static const double borderRadius = 8.0;
   static const Color sidebarBgDark = Color(0xFF23232B);
@@ -44,126 +76,157 @@ class Sidebar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 24),
+                  Center(
+                    child: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcATop,
+                      ),
+                      child: Image.asset(
+                        controller.selectedCompany.value == 'LACS'
+                            ? (controller.isSidebarExpanded.value
+                                  ? 'assets/LACS.png'
+                                  : 'assets/LACS-Logo.png')
+                            : (controller.isSidebarExpanded.value
+                                  ? 'assets/DORNISH.png'
+                                  : 'assets/DORNISH-Logo.png'),
+                        height: controller.isSidebarExpanded.value ? 60 : 50,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  if (controller.isSidebarExpanded.value)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 24),
-                          Center(
-                            child: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                Colors.white,
-                                BlendMode.srcATop,
-                              ),
-                              child: Image.asset(
-                                controller.selectedCompany.value == 'LACS'
-                                    ? (controller.isSidebarExpanded.value
-                                          ? 'assets/LACS.png'
-                                          : 'assets/LACS-Logo.png')
-                                    : (controller.isSidebarExpanded.value
-                                          ? 'assets/DORNISH.png'
-                                          : 'assets/DORNISH-Logo.png'),
-                                height: controller.isSidebarExpanded.value
-                                    ? 60
-                                    : 50,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 8,
-                            ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (controller.selectedCompany.value != 'LACS')
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4.0,
                                     ),
-                                    onPressed: () =>
-                                        controller.selectedCompany.value =
-                                            'LACS',
-                                    child: const Text('LACS'),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          controller.selectedCompany.value =
+                                              'LACS',
+                                      child: const Text('LACS'),
+                                    ),
                                   ),
                                 if (controller.selectedCompany.value !=
                                     'DORNISH')
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4.0,
                                     ),
-                                    onPressed: () =>
-                                        controller.selectedCompany.value =
-                                            'DORNISH',
-                                    child: const Text('DORNISH'),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          controller.selectedCompany.value =
+                                              'DORNISH',
+                                      child: const Text('DORNISH'),
+                                    ),
                                   ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 32),
-                          if (controller.isSidebarExpanded.value)
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'MENÚ PRINCIPAL',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          const SizedBox(height: 16),
-                          _SidebarItem(
-                            icon: Icons.home,
-                            label: 'Inicio',
-                            expanded: controller.isSidebarExpanded.value,
-                          ),
-                          _SidebarItem(
-                            icon: Icons.notifications,
-                            label: 'Notificaciones',
-                            expanded: controller.isSidebarExpanded.value,
-                          ),
-                          const SizedBox(height: 24),
-                          if (controller.isSidebarExpanded.value)
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'GENERAL',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          const SizedBox(height: 16),
-                          _SidebarItem(
-                            icon: Icons.warning_amber_rounded,
-                            label: 'Incidencias',
-                            expanded: controller.isSidebarExpanded.value,
-                          ),
-                          _EmpleadosDropdownSidebarItem(
-                            expanded: controller.isSidebarExpanded.value,
-                          ),
-                          const SizedBox(height: 24),
                         ],
                       ),
                     ),
+                  const SizedBox(height: 32),
+                  if (controller.isSidebarExpanded.value)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'MENÚ PRINCIPAL',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SidebarItem(
+                        icon: Icons.home,
+                        label: 'Inicio',
+                        expanded: controller.isSidebarExpanded.value,
+                      ),
+                    ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SidebarItem(
+                        icon: Icons.notifications,
+                        label: 'Notificaciones',
+                        expanded: controller.isSidebarExpanded.value,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  if (controller.isSidebarExpanded.value)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'GENERAL',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SidebarItem(
+                        icon: Icons.warning_amber_rounded,
+                        label: 'Incidencias',
+                        expanded: controller.isSidebarExpanded.value,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _EmpleadosDropdownSidebarItem(
+                        expanded: controller.isSidebarExpanded.value,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -216,47 +279,6 @@ class Sidebar extends StatelessWidget {
   }
 }
 
-class _SidebarItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool expanded;
-  const _SidebarItem({
-    required this.icon,
-    required this.label,
-    required this.expanded,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      child: SizedBox(
-        width: double.infinity,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 0,
-              child: Center(child: Icon(icon, color: Colors.white, size: 28)),
-            ),
-            if (expanded) ...[
-              const SizedBox(width: 12),
-              Flexible(
-                child: Text(
-                  label,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _EmpleadosDropdownSidebarItem extends StatefulWidget {
   final bool expanded;
   const _EmpleadosDropdownSidebarItem({Key? key, required this.expanded})
@@ -269,140 +291,125 @@ class _EmpleadosDropdownSidebarItem extends StatefulWidget {
 
 class _EmpleadosDropdownSidebarItemState
     extends State<_EmpleadosDropdownSidebarItem> {
-  bool _showDropdown = false;
+  OverlayEntry? _dropdownOverlay;
 
-  void _toggleDropdown(bool show) {
-    setState(() {
-      _showDropdown = show;
-    });
+  void _removeDropdownOverlay() {
+    _dropdownOverlay?.remove();
+    _dropdownOverlay = null;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () => _toggleDropdown(!_showDropdown),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: SizedBox(
-              width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 0,
-                    child: Center(
-                      child: Icon(Icons.groups, color: Colors.white, size: 28),
-                    ),
-                  ),
-                  if (widget.expanded) ...[
-                    const SizedBox(width: 12),
-                    Flexible(
-                      child: Text(
-                        'Empleados',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                    Icon(
-                      _showDropdown
-                          ? Icons.arrow_drop_up
-                          : Icons.arrow_drop_down,
-                      color: Colors.white,
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-        if (_showDropdown && widget.expanded)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 8,
-              top: 2,
-              bottom: 2,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF23232B),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 8,
-                    offset: Offset(2, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _DropdownOption(
-                    icon: Icons.list_alt,
-                    label: 'Lista de empleados',
-                    onTap: () {
-                      Get.toNamed('/listEmp');
-                      _toggleDropdown(false);
-                    },
-                  ),
-                  _DropdownOption(
-                    icon: Icons.person_add,
-                    label: 'Altas',
-                    onTap: () {
-                      Get.toNamed('/altas');
-                      _toggleDropdown(false);
-                    },
-                  ),
-                  _DropdownOption(
-                    icon: Icons.person_remove,
-                    label: 'Bajas',
-                    onTap: () {
-                      Get.toNamed('/bajas');
-                      _toggleDropdown(false);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _DropdownOption extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _DropdownOption({
-    Key? key,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
+  void _showDropdownOverlay(BuildContext context) {
+    if (_dropdownOverlay != null) return;
+    final RenderBox buttonBox = context.findRenderObject() as RenderBox;
+    final Offset buttonPosition = buttonBox.localToGlobal(Offset.zero);
+    _dropdownOverlay = OverlayEntry(
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: _removeDropdownOverlay,
+        child: Stack(
           children: [
-            Icon(icon, color: Colors.white, size: 22),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+            Positioned(
+              left: buttonPosition.dx + buttonBox.size.width,
+              top: buttonPosition.dy,
+              child: Material(
+                color: Colors.transparent,
+                elevation: 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF23232B),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 8,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        leading: const Icon(
+                          Icons.list_alt,
+                          color: Colors.white,
+                        ),
+                        title: const Text(
+                          'Lista de empleados',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/listEmp');
+                          _removeDropdownOverlay();
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.person_add,
+                          color: Colors.white,
+                        ),
+                        title: const Text(
+                          'Altas',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/altas');
+                          _removeDropdownOverlay();
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.person_remove,
+                          color: Colors.white,
+                        ),
+                        title: const Text(
+                          'Bajas',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/bajas');
+                          _removeDropdownOverlay();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
+        ),
+      ),
+    );
+    Overlay.of(context).insert(_dropdownOverlay!);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (buttonContext) => GestureDetector(
+        onTap: () {
+          if (widget.expanded) {
+            _showDropdownOverlay(buttonContext);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(child: Icon(Icons.groups, color: Colors.white, size: 28)),
+              if (widget.expanded) ...[
+                const SizedBox(width: 12),
+                Text(
+                  'Empleados',
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                const Icon(Icons.arrow_drop_down, color: Colors.white),
+              ],
+            ],
+          ),
         ),
       ),
     );
